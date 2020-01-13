@@ -3,13 +3,13 @@ from heapq import heappop, heappush
 from manhattan_graph import manhattan_graph, penn_station, grand_central_station
 from euclidean_graph import euclidean_graph, bengaluru, jaipur
 
-def heuristic(start, target):
+def manhattan_heuristic(start, target):
   x_distance = abs(start.position[0] - target.position[0])
   y_distance = abs(start.position[1] - target.position[1])
 
   return x_distance + y_distance
 
-def euclidean(start, target):
+def euclidean_heuristic(start, target):
     x_distance = abs(start.position[0] - target.position[0])
     y_distance = abs(start.position[1] - target.position[1])
 
@@ -32,7 +32,7 @@ def a_star(graph, start, target):
     current_distance, current_vertex = heappop(vertices_to_explore)
 
     for neighbor, edge_weight in graph[current_vertex]:
-      new_distance = current_distance + edge_weight + euclidean(neighbor, target)
+      new_distance = current_distance + edge_weight + euclidean_heuristic(neighbor, target)
       new_path = paths_and_distances[current_vertex][1] + [neighbor.name]
 
       if new_distance < paths_and_distances[neighbor][0]:
